@@ -2,6 +2,7 @@
 
 import { useActionState } from 'react';
 import { loginAction } from '@/lib/auth/actions';
+import Link from 'next/link';
 
 export function LoginForm() {
   const [state, formAction, isPending] = useActionState(loginAction, null);
@@ -82,12 +83,12 @@ export function LoginForm() {
       </div>
 
       <div className="text-center">
-        <a
+        <Link
           href="/register"
           className="text-indigo-600 hover:text-indigo-500"
         >
           Don&apos;t have an account? Sign up
-        </a>
+        </Link>
       </div>
     </form>
   );

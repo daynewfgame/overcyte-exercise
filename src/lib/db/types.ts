@@ -32,4 +32,9 @@ export type User = typeof users.$inferSelect;
 export type SafeUser = Omit<User, 'hashedPassword' | 'id'>;
 export type NewUser = typeof users.$inferInsert;
 export type Post = typeof posts.$inferSelect;
+
+export type PostWithAuthor = Post & {
+  author: SafeUser;
+}
+
 export type NewPost = typeof posts.$inferInsert;

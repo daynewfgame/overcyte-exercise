@@ -1,13 +1,13 @@
 import { getSession } from "@/lib/auth/utils";
 import { getPostsWithAuthors } from "@/lib/data/posts";
-import { PostsList } from "@/components/posts-list";
-import { DashboardStats } from "@/components/dashboard-stats";
-import { PrefetchedPosts } from "@/components/prefetched-posts";
 import { CreatePostForm } from "@/components/create-post-form";
 import { logoutAction } from "@/lib/auth/actions";
 import { redirect } from "next/navigation";
 import UserProfile from "@/components/user-profile";
 import LatestPosts from "@/components/latest-posts";
+import DashboardStats from "@/components/dashboard-stats";
+import Link from "next/link";
+import Posts from "@/components/posts";
 
 export default async function DashboardPage() {
   const session = await getSession();
@@ -15,8 +15,6 @@ export default async function DashboardPage() {
   if (!session) {
     redirect("/login");
   }
-
-  const allPosts = await getPostsWithAuthors();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -47,12 +45,12 @@ export default async function DashboardPage() {
               <div className="mt-6 bg-white shadow rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-4">Demo Pages</h3>
                 <div className="space-y-2">
-                  <a
+                  <Link
                     href="/performance-demo"
                     className="block px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
                   >
                     Performance Demo
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -64,12 +62,7 @@ export default async function DashboardPage() {
             <div className="lg:col-span-3">
               <CreatePostForm />
               
-              <div className="bg-white shadow rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                  All Posts
-                </h2>
-                <PostsList posts={allPosts} />
-              </div>
+              <Posts />
             </div>
           </div>
         </div>
