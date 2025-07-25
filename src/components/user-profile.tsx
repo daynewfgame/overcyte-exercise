@@ -1,12 +1,18 @@
-"use client";
-
-import { User } from "@/lib/db/types";
+import { getUserById } from "@/lib/data/users";
+import { redirect } from "next/navigation";
 
 interface UserProfileProps {
-  user: User;
+  session: { userId: number, username: string };
 }
 
-export function UserProfile({ user }: UserProfileProps) {
+const UserProfile: React.FC<UserProfileProps> = async ({ session }) => {
+
+  const user = await getUserById(session.userId);
+
+  if(!user) {
+    redirect('/login');
+  }
+
   return (
     <div className="bg-white shadow rounded-lg p-6">
       <div className="flex items-center">
@@ -27,3 +33,5 @@ export function UserProfile({ user }: UserProfileProps) {
     </div>
   );
 }
+
+export default UserProfile;

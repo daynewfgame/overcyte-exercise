@@ -1,13 +1,12 @@
 import { getSession } from "@/lib/auth/utils";
-import { getUserWithPosts } from "@/lib/data/users";
 import { getPostsWithAuthors, getAllPosts } from "@/lib/data/posts";
-import { UserProfile } from "@/components/user-profile";
 import { PostsList } from "@/components/posts-list";
 import { DashboardStats } from "@/components/dashboard-stats";
 import { PrefetchedPosts } from "@/components/prefetched-posts";
 import { CreatePostForm } from "@/components/create-post-form";
 import { logoutAction } from "@/lib/auth/actions";
 import { redirect } from "next/navigation";
+import UserProfile from "@/components/user-profile";
 
 export default async function DashboardPage() {
   const session = await getSession();
@@ -16,13 +15,8 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  const userData = await getUserWithPosts(session.userId);
   const allPosts = await getPostsWithAuthors();
   const postsPromise = getAllPosts();
-
-  if (!userData) {
-    redirect("/login");
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -48,7 +42,7 @@ export default async function DashboardPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1">
-              <UserProfile user={userData} />
+              <UserProfile session={session} />
 
               <div className="mt-6 bg-white shadow rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-4">Demo Pages</h3>
