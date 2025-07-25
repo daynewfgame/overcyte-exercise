@@ -1,9 +1,18 @@
 import { db } from "@/lib/db";
 import { posts, users } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
+/**
+ * @deprecated Not used anymore, use getLatestPosts() instead
+ */
 export async function getAllPosts() {
+  console.warn('getAllPosts is deprecated, use getLatestPosts() instead');
+
   return await db.select().from(posts);
+}
+
+export async function getLatestPosts() {
+  return await db.select().from(posts).orderBy(desc(posts.createdAt)).limit(5);
 }
 
 export async function getPostsWithAuthors() {

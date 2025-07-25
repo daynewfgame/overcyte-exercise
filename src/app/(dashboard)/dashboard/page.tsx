@@ -1,5 +1,5 @@
 import { getSession } from "@/lib/auth/utils";
-import { getPostsWithAuthors, getAllPosts } from "@/lib/data/posts";
+import { getPostsWithAuthors } from "@/lib/data/posts";
 import { PostsList } from "@/components/posts-list";
 import { DashboardStats } from "@/components/dashboard-stats";
 import { PrefetchedPosts } from "@/components/prefetched-posts";
@@ -7,6 +7,7 @@ import { CreatePostForm } from "@/components/create-post-form";
 import { logoutAction } from "@/lib/auth/actions";
 import { redirect } from "next/navigation";
 import UserProfile from "@/components/user-profile";
+import LatestPosts from "@/components/latest-posts";
 
 export default async function DashboardPage() {
   const session = await getSession();
@@ -16,7 +17,6 @@ export default async function DashboardPage() {
   }
 
   const allPosts = await getPostsWithAuthors();
-  const postsPromise = getAllPosts();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -57,7 +57,7 @@ export default async function DashboardPage() {
               </div>
 
               <div className="mt-6 bg-white shadow rounded-lg p-6">
-                <PrefetchedPosts postsPromise={postsPromise} />
+                <LatestPosts />
               </div>
             </div>
 
