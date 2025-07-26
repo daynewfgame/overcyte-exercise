@@ -20,6 +20,7 @@ const Posts = () => {
   const onSearch = (value: string) => {
     startSearchTransition(() => {
       setSearch(value);
+      setPage(1); // Reset page to 1 when search changes
     });
   }
 

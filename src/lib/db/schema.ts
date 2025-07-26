@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, index } from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
 
 export const users = sqliteTable("users", {
@@ -21,7 +21,12 @@ export const posts = sqliteTable("posts", {
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .$defaultFn(() => new Date()),
-});
+}, (table) => [
+  index("idx_posts_author_id").on(table.authorId),
+  index("idx_posts_created_at").on(table.createdAt),
+  index("idx_posts_like_count").on(table.likeCount),
+  index("idx_posts_title").on(table.title),
+]);
 
 export const usersRelations = relations(users, ({ many }) => ({
   posts: many(posts),
