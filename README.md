@@ -1,45 +1,38 @@
-## Exercise 2025
+# Report
 
-### Requirements
+Below is a high level view of the fixes that I have implemented, and my use of a.i tools.
 
-- Node 22.x
-- pnpm
+## Fixes
 
-### Run
+1. **Performance Improvements (Task 3: Poor React Performance)**
+   - Implemented skeleton loading for better user experience during data fetches
+   - Added debouncing for search functionality using lodash to prevent excessive re-renders
+   - Improved performance of the performance-demo page
+   - Implemented Server Side pagiantion (all posts), and client side pagination (performance-demo)
+   - Created better loading states across components
 
-```bash
-git clone git@github.com:Overcyte/exercise-2025.git
-cd exercise-2025
-pnpm i
-pnpm db:seed
-pnpm dev
-```
+2. **Database and Data Loading Optimizations (Task 2: Database Queries)**
+   - Added proper indexes to the post table for improved query performance
+   - Implemented efficient pagination with a dedicated component
+   - Deprecated inefficient `getAllPosts` function in favor of optimized queries
+   - Created new API endpoints with proper search, pagination, and sorting capabilities
 
-### Tasks
+3. **Data Validation and Type Safety (Task 1: Data Validation)**
+   - Added SafeUser type to ensure proper type checking
+   - Updated default values and validation checks throughout the application
+   - Improved data handling in the Posts component
+   - Deprecated `getUserWithPosts` to remove unused data fetching
 
-These tasks aren't leetcode, nor are they difficult. Simple things that show an attention to detail and baseline knowledge of Next, React, Drizzle and Effect.
+4. **Effect Library Integration (Task 4: Effect Library)**
+   - Refactored the `registerUser` function and related operations to use the Effect library
+   - Implemented proper error handling and flow control using Effect patterns
 
-1. Identify and fix issues where data is not validated or checked before it gets used
-   - there are no SQL injections
-2. Identify and fix poor database queries and poor data loading patterns
-   - while not much of an issue with local sqlite, implement correct indexes
-3. Identify and fix poor React performance
-4. Refactor the `registerUser` function using [Effect](https://effect.website/).
-   - this doesn't need to be perfect, nor use the full Effect toolbox. just a basic understanding of what Effect provides
-5. Implement App Router/React features in places that need it, such as suspense and transitions
-6. Identify and fix a sensitive data leak issue
+5. **React Features and Loading States (Task 5: App Router/React Features)**
+   - Added skeleton loading components for better Suspense integration
+   - Improved component architecture with React patterns (code splitting)
+   - Created a more modular structure with dedicated components for Latest Posts
+   - Enhanced dashboard with better loading states and post count displays
 
-Corners have been cut for the sake of boilerplate, and are not issues to be fixed:
+## A.I Usage
 
-- Weak auth system
-- `process.env` for environment variables instead of proper server/client separation.
-
-### AI Usage
-
-We use AI tools ourselves, so we're not interested in blocking their usage. We're looking for responsible, methodical usage of these tools, not reckless vibe coding.
-
-If AI is used, include:
-
-- a log of your prompts
-- any planning or todo documents
-- small description of your methodology when using AI tools
+A.I was used to understand concepts, such as Effect and Virtualisation. I purposely minimised my usage of A.I in this excerise, as I wanted to prove that I can solve these problems without depending on A.I

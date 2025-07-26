@@ -1,5 +1,4 @@
 import { getSession } from "@/lib/auth/utils";
-import { getPostsWithAuthors } from "@/lib/data/posts";
 import { CreatePostForm } from "@/components/create-post-form";
 import { logoutAction } from "@/lib/auth/actions";
 import { redirect } from "next/navigation";
