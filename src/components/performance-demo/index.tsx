@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useEffect, useTransition } from "react";
 import PerformanceDemoListItem from "./performance-demo-list-item";
+import Pagination from "../pagination";
 
 export interface Item {
   id: number;
@@ -170,6 +171,12 @@ const PerformanceDemo = () => {
         </div>
       ) : (
         <div className="space-y-4">
+          <Pagination
+            page={currentPage}
+            totalPages={totalPages}
+            setPage={handlePageChange}
+          />
+          
           { Boolean(paginatedItems.length) ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               { paginatedItems.map(item => (
@@ -182,39 +189,11 @@ const PerformanceDemo = () => {
             </div>
           ) }
 
-          <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-            <div className="flex items-center">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Previous
-              </button>
-              <span className="mx-4">
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Next
-              </button>
-            </div>
-            
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-700">Go to page:</span>
-              <input
-                type="number"
-                min={1}
-                max={totalPages}
-                value={currentPage}
-                onChange={(e) => handlePageChange(Number(e.target.value))}
-                className="w-16 px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
+          <Pagination
+            page={currentPage}
+            totalPages={totalPages}
+            setPage={handlePageChange}
+          />
         </div>
       ) }
 
