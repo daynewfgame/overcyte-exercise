@@ -16,7 +16,12 @@ export async function getLatestPosts() {
   return await db.select().from(posts).orderBy(desc(posts.createdAt)).limit(5);
 }
 
+/**
+ * @deprecated Not used anymore, use GET /api/posts instead
+ */
 export async function getPostsWithAuthors(): Promise<PostWithAuthor[]> {
+  console.warn('getPostsWithAuthors is deprecated, use /api/posts instead');
+
   return await db.query.posts.findMany({
     with: {
       author: {
