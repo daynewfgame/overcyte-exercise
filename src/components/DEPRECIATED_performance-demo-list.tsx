@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PerformanceDemoItem } from "./performance-demo-item";
+import { PerformanceDemoItem } from "./DEPRECIATED_performance-demo-item";
 
 // Generate a large dataset
 const generateItems = (count: number) => {

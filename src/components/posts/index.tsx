@@ -56,14 +56,37 @@ const Posts = () => {
             </select>
           </div>
 
-          <div className="flex justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <p>Page { data?.page } of { data?.totalPages }</p>
+          <div className="flex items-center justify-between border-t border-gray-200 pt-4">
+            <div className="flex items-center">
+              <button
+                onClick={() => setPage(page - 1)}
+                disabled={page === 1}
+                className="relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+              <span className="mx-4">
+                Page {page} of {data?.totalPages}
+              </span>
+              <button
+                onClick={() => setPage(page + 1)}
+                disabled={page === data?.totalPages}
+                className="relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
             </div>
-
-            <div className="flex items-center gap-2">
-              <button className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-neutral-100 hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed" onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
-              <button className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-neutral-100 hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed" onClick={() => setPage(page + 1)} disabled={page === data?.totalPages}>Next</button>
+            
+            <div className="flex items-center space-x-2">
+              <span className="text-sm text-gray-700">Go to page:</span>
+              <input
+                type="number"
+                min={1}
+                max={data?.totalPages}
+                value={page}
+                onChange={(e) => setPage(Number(e.target.value))}
+                className="w-16 px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
             </div>
           </div>
         </div>

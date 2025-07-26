@@ -1,9 +1,9 @@
-import { PerformanceDemoList } from "@/components/performance-demo-list";
+import PerformanceDemo from "@/components/performance-demo";
 
 export default function PerformanceDemoPage() {
   return (
     <div className="container mx-auto p-6">
-      <PerformanceDemoList />
+      <PerformanceDemo />
     </div>
   );
 }
