@@ -1,7 +1,8 @@
 'use client';
 
 import { usePosts } from "@/hooks/posts/usePosts";
-import { Fragment, useState, useTransition } from "react";
+import { Fragment, useState, useTransition, useCallback, useEffect } from "react";
+import { debounce } from 'lodash';
 import { LikeButton } from "../like-button";
 import { PostWithAuthor } from "@/lib/db/types";
 import Pagination from "../pagination";
@@ -18,12 +19,25 @@ const Posts = () => {
 
   const { data, isLoading, isError, error } = usePosts(page, search, sortBy);
   
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      startSearchTransition(() => {
+        setSearch(value);
+        setPage(1); // Reset page to 1 when search changes
+      });
+    }, 300),
+    []
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
+
   const onSearch = (value: string) => {
-    startSearchTransition(() => {
-      setSearch(value);
-      setPage(1); // Reset page to 1 when search changes
-    });
-  }
+    debouncedSearch(value);
+  };
 
   const onSort = (value: TSortBy) => {
     startSortTransition(() => {
@@ -43,7 +57,6 @@ const Posts = () => {
             <input
               type="text"
               placeholder="Search posts..."
-              value={search}
               onChange={(e) => onSearch(e.target.value)}
               className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
@@ -57,11 +70,14 @@ const Posts = () => {
             </select>
           </div>
 
-          <Pagination
-            page={page}
-            totalPages={data?.totalPages || 1}
-            setPage={setPage}
-          />
+          {Boolean(data?.posts.length) && (
+            <Pagination
+              page={page}
+              totalPages={data?.totalPages || 1}
+              setPage={setPage}
+            />
+          )}
+
         </div>
 
         <div className="space-y-4">
@@ -79,18 +95,22 @@ const Posts = () => {
           ) : (
             <Fragment>
               { Boolean(data?.posts.length) ? (
-                data?.posts.map((post) => (
-                  <PostItem key={post.id} post={post} />
-                ))
-              ) : (
-                <p>No posts found</p>
-              )}
+                <Fragment>
+                  { data?.posts.map((post) => (
+                    <PostItem key={post.id} post={post} />
+                  )) }
 
-              <Pagination
-                page={page}
-                totalPages={data?.totalPages || 1}
-                setPage={setPage}
-              />
+                  <Pagination
+                    page={page}
+                    totalPages={data?.totalPages || 1}
+                    setPage={setPage}
+                  />
+                </Fragment>
+              ) : (
+                <div className="flex justify-center items-center h-full">
+                  <p className="text-gray-500">No posts found</p>
+                </div>
+              )}
             </Fragment>
           )}
         </div>

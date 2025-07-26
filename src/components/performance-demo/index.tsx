@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect, useTransition } from "react";
+import { useMemo, useState, useEffect, useTransition, Fragment } from "react";
 import PerformanceDemoListItem from "./performance-demo-list-item";
 import Pagination from "../pagination";
 
@@ -171,32 +171,31 @@ const PerformanceDemo = () => {
         </div>
       ) : (
         <div className="space-y-4">
-          <Pagination
-            page={currentPage}
-            totalPages={totalPages}
-            setPage={handlePageChange}
-          />
-          
           { Boolean(paginatedItems.length) ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              { paginatedItems.map(item => (
-                <PerformanceDemoListItem key={item.id} item={item} search={search} />
-              )) }
-            </div>
+            <Fragment>
+              <Pagination
+                page={currentPage}
+                totalPages={totalPages}
+                setPage={handlePageChange}
+              />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                { paginatedItems.map(item => (
+                  <PerformanceDemoListItem key={item.id} item={item} search={search} />
+                )) }
+              </div>
+              <Pagination
+                page={currentPage}
+                totalPages={totalPages}
+                setPage={handlePageChange}
+              />
+            </Fragment>
           ) : (
             <div className="text-center text-gray-500">
               No items found
             </div>
           ) }
-
-          <Pagination
-            page={currentPage}
-            totalPages={totalPages}
-            setPage={handlePageChange}
-          />
         </div>
       ) }
-
     </div>
   );
 };

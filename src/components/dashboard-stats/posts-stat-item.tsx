@@ -4,7 +4,7 @@ import { posts } from "@/lib/db/schema";
 const getTotalPosts = async () => {
   await new Promise(resolve => setTimeout(resolve, 600));
   const postCount = await db.select().from(posts);
-  return postCount.length;
+  return postCount.length || 0;
 }
 
 const PostsStatItem = async () => {
@@ -13,7 +13,7 @@ const PostsStatItem = async () => {
   return (
     <div className="bg-green-50 p-4 rounded-lg">
       <h3 className="text-lg font-semibold text-green-900">Posts</h3>
-      <p className="text-2xl font-bold text-green-700">{ totalPosts }</p>
+      <p className="text-2xl font-bold text-green-700">{totalPosts ?? 0}</p>
     </div>
   )
 }

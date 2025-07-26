@@ -14,7 +14,7 @@ const LikesStatItem = async () => {
   return (
     <div className="p-4 rounded-lg bg-red-50">
       <h3 className="text-lg font-semibold text-red-900">Likes</h3>
-      <p className="text-2xl font-bold text-red-700">{totalLikes}</p>
+      <p className="text-2xl font-bold text-red-700">{totalLikes ?? 0}</p>
     </div>
   )
 }
