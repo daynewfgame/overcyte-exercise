@@ -163,8 +163,10 @@ const PerformanceDemo = () => {
       </div>
 
       { isLoading ? (
-        <div className="text-center text-gray-500">
-          Loading...
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          { Array.from({ length: 20 }).map((_, index) => (
+            <div key={index} className="bg-gray-50 rounded-lg h-[290px] animate-pulse" />
+          )) }
         </div>
       ) : (
         <div className="space-y-4">
