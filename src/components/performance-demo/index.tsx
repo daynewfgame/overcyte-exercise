@@ -164,11 +164,15 @@ const PerformanceDemo = () => {
       </div>
 
       { isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          { Array.from({ length: 20 }).map((_, index) => (
-            <div key={index} className="bg-gray-50 rounded-lg h-[290px] animate-pulse" />
-          )) }
-        </div>
+        <Fragment>
+          <div className="h-[70px] animate-pulse bg-gray-50 rounded-lg" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            { Array.from({ length: 20 }).map((_, index) => (
+              <div key={index} className="bg-gray-50 rounded-lg h-[290px] animate-pulse" />
+            )) }
+          </div>
+          <div className="h-[70px] animate-pulse bg-gray-50 rounded-lg" />
+        </Fragment>
       ) : (
         <div className="space-y-4">
           { Boolean(paginatedItems.length) ? (

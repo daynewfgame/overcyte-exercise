@@ -70,6 +70,8 @@ const Posts = () => {
             </select>
           </div>
 
+          <p>Showing {data?.posts.length} of {data?.total} posts</p>
+
           {Boolean(data?.posts.length) && (
             <Pagination
               page={page}
@@ -88,7 +90,6 @@ const Posts = () => {
               </div>
             )
           }
-
 
           { isLoading ? (
             <PostsItemsLoading />
