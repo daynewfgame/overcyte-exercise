@@ -12,6 +12,7 @@ import {
 } from "./utils";
 import { eq } from "drizzle-orm";
 import { registerUser } from "@/lib/workflows/registration";
+import { Effect } from "effect";
 
 const registerSchema = z.object({
   username: z.string().min(3).max(20),
@@ -47,7 +48,7 @@ export async function registerAction(_prevState: any, formData: FormData) {
       return { error: "Username already exists" };
     }
 
-    const result = await registerUser(username, password);
+    const result = await Effect.runPromise(registerUser(username, password));
 
     if (result.success) {
       const token = await createJWT({
